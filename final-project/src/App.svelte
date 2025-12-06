@@ -278,56 +278,25 @@
   </div>
 
   <div class="container" id="posts-container"></div>
-  <div class="loading" id="loading">Loading more posts...</div>
+  <div class="loading" id="loading">Loading posts...</div>
 
   <script>
-    const subreddits = ['technology', 'programming', 'science', 'news', 'gaming', 'music', 'movies', 'art', 'books'];
-    const titles = [
-      'Just finished my first full-stack project!',
-      'This changed my perspective completely',
-      'Can we talk about how amazing this is?',
-      'Unpopular opinion: this is actually good',
-      'I made a tool that solves this problem',
-      'Why does nobody talk about this?',
-      'This is the best explanation I\'ve seen',
-      'Just discovered this hidden gem',
-      'Am I the only one who thinks this?',
-      'This blew my mind today',
-      'Found a bug that\'s been hiding for years',
-      'This is revolutionary and nobody noticed',
-      'Finally figured out how this works'
-    ];
-
     let postId = 0;
     let posts = [];
+    let postsData = [];
+    let currentIndex = 0;
 
-    function generatePosts(count) {
-      return Array.from({ length: count }, () => {
-        const hasAI = Math.random() > 0.5;
-        const aiTypes = [];
-
-        if (hasAI) {
-          if (Math.random() > 0.5) aiTypes.push('text');
-          if (Math.random() > 0.6) aiTypes.push('image');
-          if (aiTypes.length === 0) aiTypes.push('text');
-        }
-
-        return {
-          id: postId++,
-          subreddit: subreddits[Math.floor(Math.random() * subreddits.length)],
-          author: `user${Math.floor(Math.random() * 1000)}`,
-          title: titles[Math.floor(Math.random() * titles.length)],
-          content: Math.random() > 0.4 ? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.' : '',
-          votes: Math.floor(Math.random() * 10000) - 1000,
-          comments: Math.floor(Math.random() * 500),
-          timeAgo: `${Math.floor(Math.random() * 24)}h ago`,
-          hasImage: Math.random() > 0.7,
-          userVote: 0,
-          hasAI: hasAI,
-          aiTypes: aiTypes
-        };
+    // Load posts from JSON file
+    fetch('src/posts.json')
+      .then(response => response.json())
+      .then(data => {
+        postsData = data;
+        loadMorePosts();
+      })
+      .catch(error => {
+        console.error('Error loading posts:', error);
+        document.getElementById('loading').textContent = 'Error loading posts. Make sure posts.json exists!';
       });
-    }
 
     function formatVotes(votes) {
       if (votes >= 1000) {
@@ -389,7 +358,8 @@
       div.className = 'post';
       div.setAttribute('data-post-id', post.id);
 
-      const aiFlag = post.hasAI ? `
+      const hasAI = post.aiTypes && post.aiTypes.length > 0;
+      const aiFlag = hasAI ? `
         <button class="ai-flag" onclick="event.stopPropagation(); toggleAITooltip(${post.id})">
           <svg fill="currentColor" viewBox="0 0 24 24">
             <path d="M9 3L5 7v6l4 4 4-4V7L9 3zm0 2.83L10.17 7 9 8.17 7.83 7 9 5.83zM5 9h8v4H5V9zm7.5 11.5l-1.09-1.09L12.5 18l-1.09-1.41L10.5 17l2 2.5 3.5-4.5-1.41-1.09-2.59 3.34-1-1.25z"/>
@@ -397,7 +367,7 @@
           AI
         </button>
         <div class="ai-tooltip" data-tooltip-id="${post.id}">
-          <div class="ai-tooltip-header">🤖 AI Detection Results</div>
+          <div class="ai-tooltip-header">🤖 Dave Says...</div>
           ${post.aiTypes.includes('text') ? `
             <div class="ai-detection-item">
               <svg fill="currentColor" viewBox="0 0 24 24">
@@ -460,24 +430,34 @@
     }
 
     function loadMorePosts() {
-      const newPosts = generatePosts(10);
-      posts.push(...newPosts);
-
       const container = document.getElementById('posts-container');
-      newPosts.forEach(post => {
+      const batchSize = 5;
+
+      for (let i = 0; i < batchSize && currentIndex < postsData.length; i++) {
+        const postData = postsData[currentIndex];
+        const post = {
+          id: postId++,
+          ...postData,
+          userVote: 0
+        };
+
+        posts.push(post);
         container.appendChild(createPostElement(post));
-      });
+        currentIndex++;
+      }
+
+      if (currentIndex >= postsData.length) {
+        document.getElementById('loading').textContent = 'No more posts to load';
+      }
     }
 
     const observer = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting) {
+      if (entries[0].isIntersecting && currentIndex < postsData.length) {
         loadMorePosts();
       }
     }, { threshold: 0.1 });
 
     observer.observe(document.getElementById('loading'));
-
-    loadMorePosts();
   </script>
 </body>
 </html>

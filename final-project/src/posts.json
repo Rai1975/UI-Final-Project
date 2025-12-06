@@ -1,0 +1,90 @@
+[
+  {
+    "subreddit": "technology",
+    "author": "techguru99",
+    "title": "The future of AI is here and it's incredible",
+    "content": "Just got my hands on the latest AI tool and wow, the capabilities are mind-blowing. We're living in the future folks.",
+    "votes": 4200,
+    "comments": 342,
+    "timeAgo": "3h ago",
+    "hasImage": true,
+    "aiTypes": ["text"]
+  },
+  {
+    "subreddit": "programming",
+    "author": "codewizard",
+    "title": "I finally understand pointers after 5 years",
+    "content": "Today it just clicked. All those years of confusion are finally over. Here's what helped me...",
+    "votes": 8900,
+    "comments": 567,
+    "timeAgo": "5h ago",
+    "hasImage": false,
+    "aiTypes": []
+  },
+  {
+    "subreddit": "gaming",
+    "author": "player1337",
+    "title": "This indie game deserves way more attention",
+    "content": "Found this absolute gem on Steam. Only 200 reviews but it's easily one of the best games I've played this year. The art style is phenomenal.",
+    "votes": 2100,
+    "comments": 189,
+    "timeAgo": "7h ago",
+    "hasImage": true,
+    "aiTypes": ["image"]
+  },
+  {
+    "subreddit": "science",
+    "author": "lab_rat_42",
+    "title": "New study shows promising results for cancer treatment",
+    "content": "Researchers at MIT have developed a novel approach that shows 85% success rate in early trials. This could be a game changer.",
+    "votes": 15600,
+    "comments": 892,
+    "timeAgo": "2h ago",
+    "hasImage": false,
+    "aiTypes": []
+  },
+  {
+    "subreddit": "movies",
+    "author": "cinephile2000",
+    "title": "Just rewatched Blade Runner and noticed something",
+    "content": "On my 10th viewing I finally caught this incredible detail in the opening scene. The symbolism is just perfect.",
+    "votes": 3400,
+    "comments": 245,
+    "timeAgo": "9h ago",
+    "hasImage": true,
+    "aiTypes": ["text", "image"]
+  },
+  {
+    "subreddit": "music",
+    "author": "vinylcollector",
+    "title": "Found this album at a garage sale for $2",
+    "content": "Turns out it's a first pressing worth over $500. Sometimes you get lucky!",
+    "votes": 6700,
+    "comments": 423,
+    "timeAgo": "12h ago",
+    "hasImage": true,
+    "aiTypes": []
+  },
+  {
+    "subreddit": "art",
+    "author": "digitalartist",
+    "title": "My first attempt at 3D modeling",
+    "content": "Spent the last 3 months learning Blender. Still got a long way to go but I'm proud of this!",
+    "votes": 9200,
+    "comments": 678,
+    "timeAgo": "1h ago",
+    "hasImage": true,
+    "aiTypes": ["image"]
+  },
+  {
+    "subreddit": "books",
+    "author": "bookworm99",
+    "title": "This book changed my entire perspective on life",
+    "content": "I know that sounds dramatic but hear me out. The way the author frames consciousness and existence is revolutionary.",
+    "votes": 1800,
+    "comments": 312,
+    "timeAgo": "15h ago",
+    "hasImage": false,
+    "aiTypes": []
+  }
+]
