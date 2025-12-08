@@ -270,6 +270,34 @@
       font-size: 10px;
       font-weight: bold;
     }
+
+    .highlight-btn {
+      margin-top: 8px;
+      padding: 8px 12px;
+      background: #667eea;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: bold;
+      width: 100%;
+      transition: background 0.2s;
+    }
+
+    .highlight-btn:hover {
+      background: #764ba2;
+    }
+
+    .highlight-btn.active {
+      background: #ff4500;
+    }
+
+    .ai-highlight {
+      background: linear-gradient(120deg, #fef08a 0%, #fde047 100%);
+      padding: 2px 4px;
+      border-radius: 2px;
+    }
   </style>
 </head>
 <body>
@@ -287,7 +315,7 @@
     let currentIndex = 0;
 
     // Load posts from JSON file
-    fetch('src/posts.json')
+    fetch('/src/posts.json')
       .then(response => response.json())
       .then(data => {
         postsData = data;
@@ -347,6 +375,69 @@
       }
     }
 
+    function toggleHighlight(postId) {
+      const post = posts.find(p => p.id === postId);
+      const postEl = document.querySelector(`[data-post-id="${postId}"]`);
+      const btn = postEl.querySelector('.highlight-btn');
+
+      if (!post.highlighted) {
+        // Highlight AI text
+        if (post.aiTypes.includes('text')) {
+          const titleEl = postEl.querySelector('.post-title');
+          const contentEl = postEl.querySelector('.post-text');
+
+          if (titleEl) {
+            const text = titleEl.textContent;
+            titleEl.innerHTML = `<span class="ai-highlight">${text}</span>`;
+          }
+          if (contentEl) {
+            const text = contentEl.textContent;
+            contentEl.innerHTML = `<span class="ai-highlight">${text}</span>`;
+          }
+        }
+
+        // Highlight AI image
+        if (post.aiTypes.includes('image')) {
+          const imgEl = postEl.querySelector('.post-image');
+          if (imgEl) {
+            imgEl.style.border = '4px solid #fde047';
+            imgEl.style.boxShadow = '0 0 0 4px rgba(251, 191, 36, 0.3)';
+          }
+        }
+
+        post.highlighted = true;
+        btn.classList.add('active');
+        btn.textContent = 'Remove Highlights';
+      } else {
+        // Remove highlights
+        if (post.aiTypes.includes('text')) {
+          const titleEl = postEl.querySelector('.post-title');
+          const contentEl = postEl.querySelector('.post-text');
+
+          if (titleEl) {
+            const span = titleEl.querySelector('.ai-highlight');
+            if (span) titleEl.textContent = span.textContent;
+          }
+          if (contentEl) {
+            const span = contentEl.querySelector('.ai-highlight');
+            if (span) contentEl.textContent = span.textContent;
+          }
+        }
+
+        if (post.aiTypes.includes('image')) {
+          const imgEl = postEl.querySelector('.post-image');
+          if (imgEl) {
+            imgEl.style.border = '';
+            imgEl.style.boxShadow = '';
+          }
+        }
+
+        post.highlighted = false;
+        btn.classList.remove('active');
+        btn.textContent = 'Highlight AI Content';
+      }
+    }
+
     document.addEventListener('click', (e) => {
       if (!e.target.closest('.ai-flag') && !e.target.closest('.ai-tooltip')) {
         document.querySelectorAll('.ai-tooltip').forEach(t => t.classList.remove('show'));
@@ -360,7 +451,7 @@
 
       const hasAI = post.aiTypes && post.aiTypes.length > 0;
       const aiFlag = hasAI ? `
-        <button class="ai-flag" onclick="event.stopPropagation(); toggleAITooltip(${post.id})">
+        <button class="ai-flag" onclick="toggleAITooltip(${post.id})">
           <svg fill="currentColor" viewBox="0 0 24 24">
             <path d="M9 3L5 7v6l4 4 4-4V7L9 3zm0 2.83L10.17 7 9 8.17 7.83 7 9 5.83zM5 9h8v4H5V9zm7.5 11.5l-1.09-1.09L12.5 18l-1.09-1.41L10.5 17l2 2.5 3.5-4.5-1.41-1.09-2.59 3.34-1-1.25z"/>
           </svg>
@@ -384,6 +475,9 @@
               <span><span class="ai-badge">IMAGE</span> Image created by AI</span>
             </div>
           ` : ''}
+          <button class="highlight-btn" onclick="toggleHighlight(${post.id})">
+            Highlight AI Content
+          </button>
         </div>
       ` : '';
 
@@ -438,7 +532,8 @@
         const post = {
           id: postId++,
           ...postData,
-          userVote: 0
+          userVote: 0,
+          highlighted: false
         };
 
         posts.push(post);

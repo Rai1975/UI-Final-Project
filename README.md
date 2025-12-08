@@ -15,4 +15,6 @@ It is almost impossible to stop sources from using AI to generate content, howev
 It was very important from the start that David should not interfere with the internet surfing experience. Based on research that I did for a previous project for using AI to enhance your browsing experience rather than offloading ([Project Gyrus](https://github.com/Aryagarg23/wb_hack_sf)), I found that almost all of the interviewees liked browsers that **stayed out of their way** when browsing. Considering this, it was an easy decision that David should be minimal in terms of space on screen.
 
 Another consideration was to be specific about what part of the post contains AI-generated content. I have seen UI-based labels for AI-generated content on social media before but they are not specific. Instagram for example allows their creators, if they chose to be honest, to put a label on their post which lets users know that parts of the post are AI-generated. However, this does not specify which part of the post is AI-generated unless the user who made the post specified.
+
+
 ### How to use David?
