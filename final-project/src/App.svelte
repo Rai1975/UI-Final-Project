@@ -313,7 +313,7 @@
     let currentIndex = 0;
 
     // Load posts from JSON file
-    fetch('/src/posts.json')
+    fetch('src/posts.json')
       .then(response => response.json())
       .then(data => {
         postsData = data;
