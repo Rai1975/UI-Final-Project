@@ -191,7 +191,7 @@
       position: absolute;
       top: 8px;
       right: 8px;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: #a7a9b1
       border: none;
       border-radius: 4px;
       padding: 6px 10px;
@@ -202,14 +202,12 @@
       color: white;
       font-size: 11px;
       font-weight: bold;
-      box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
       transition: all 0.2s;
       z-index: 10;
     }
 
     .ai-flag:hover {
       transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
     }
 
     .ai-flag svg {
@@ -263,7 +261,7 @@
     }
 
     .ai-badge {
-      background: #667eea;
+      background: black;
       color: white;
       padding: 2px 6px;
       border-radius: 3px;
@@ -274,7 +272,7 @@
     .highlight-btn {
       margin-top: 8px;
       padding: 8px 12px;
-      background: #667eea;
+      background: black;
       color: white;
       border: none;
       border-radius: 4px;
